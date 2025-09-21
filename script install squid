@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "Instalando y configurando Squid..."
+
+sudo apt update && sudo apt install -y squid
+
+# Copiar configuración
+sudo cp squid/squid.conf /etc/squid/
+
+# Inicializar caché
+sudo squid -z
+
+# Verificar sintaxis
+sudo squid -k parse
+
+# Reiniciar
+sudo systemctl restart squid
+sudo systemctl enable squid
+
+# Abrir puerto
+sudo ufw allow 3128/tcp
+
+echo "Squid instalado y configurado."
+echo "Prueba: export http_proxy='http://192.168.147.128:3128' && curl -I http://example.com"
