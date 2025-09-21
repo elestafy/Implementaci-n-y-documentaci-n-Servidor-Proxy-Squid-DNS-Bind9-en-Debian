@@ -4,7 +4,7 @@ S8 Napo
 
 Repositorio: Configuración DNS + Proxy (Bind9 + Squid)
 
-Equipo Tonotos — Laboratorio de Redes
+Equipo Silksong — Laboratorio de Redes
 
 
 
