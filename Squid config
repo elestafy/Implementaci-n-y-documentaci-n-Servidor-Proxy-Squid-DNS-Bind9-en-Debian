@@ -1,0 +1,76 @@
+# ================================
+# Configuración Básica de Squid
+# EquipoX - Laboratorio Proxy DNS
+# Red: 192.168.147.0/24
+# Servidor: 192.168.147.128
+# ================================
+
+# Puerto de escucha
+http_port 3128
+
+# Directorio de caché (100 MB)
+cache_dir ufs /var/spool/squid 100 16 256
+
+# Logs
+access_log /var/log/squid/access.log
+cache_log /var/log/squid/cache.log
+cache_store_log /var/log/squid/store.log
+
+# ================================
+# ACLs - Listas de Control de Acceso
+# ================================
+
+# Red local permitida (TU RED: 192.168.147.0/24)
+acl red_local src 192.168.147.0/24
+
+# Sitios bloqueados (para demostración)
+acl sitios_bloqueados dstdomain .facebook.com .youtube.com .instagram.com
+
+# Horario laboral (opcional, para políticas avanzadas)
+acl horario_laboral time MTWHF 09:00-18:00
+
+# Usuarios (opcional, descomentar si se usa autenticación)
+# auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/usuarios
+# auth_param basic realm Autenticación Requerida
+# auth_param basic credentialsttl 2 hours
+# acl usuarios_validos proxy_auth REQUIRED
+
+# ================================
+# Políticas de Acceso
+# ================================
+
+# PERMITIR acceso solo desde tu red local
+http_access allow red_local
+
+# BLOQUEAR sitios definidos
+http_access deny sitios_bloqueados
+
+# DENEGAR todo lo demás (¡SIEMPRE AL FINAL!)
+http_access deny all
+
+# ================================
+# Opciones Adicionales de Seguridad
+# ================================
+
+# Nombre visible del proxy (útil para logs y diagnóstico)
+visible_hostname proxy.lab.local
+
+# Ocultar la IP del cliente real (seguridad básica)
+forwarded_for delete
+
+# No mostrar versión de Squid en errores (evitar fingerprinting)
+httpd_suppress_version_string on
+
+# Ocultar cabecera "Via" (opcional, más seguridad)
+via off
+
+# ================================
+# Configuración de Caché
+# ================================
+
+# Almacenar objetos exitosos por 1 hora como mínimo
+refresh_pattern . 60 80% 3600 override-expire ignore-reload
+
+# ================================
+# Fin de la configuración
+# ================================
