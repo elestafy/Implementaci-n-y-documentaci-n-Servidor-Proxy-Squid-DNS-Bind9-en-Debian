@@ -1,0 +1,15 @@
+$TTL    86400
+@       IN      SOA     ns1.tudominio.local. admin.tudominio.local. (
+                              3         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.tudominio.local.
+@       IN      MX      10 mail.tudominio.local.
+
+ns1     IN      A       192.168.147.128
+mail    IN      A       192.168.147.128
+www     IN      A       192.168.147.128
+cliente1 IN     A       192.168.147.50
