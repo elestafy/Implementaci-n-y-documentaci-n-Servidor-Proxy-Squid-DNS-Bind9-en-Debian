@@ -1,0 +1,30 @@
+
+
+
+CARPETA `bind/`
+
+
+ `bind/named.conf.options`
+ 
+bind
+
+options {
+    directory "/var/cache/bind";
+
+    listen-on { 192.168.147.128; };
+    listen-on-v6 { none; };
+
+    allow-query { 192.168.147.0/24; };
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+
+    allow-transfer { none; };
+    version "No disponible";
+    recursion yes;
+    allow-recursion { 192.168.147.0/24; };
+
+    dnssec-validation auto;
+    auth-nxdomain no;
+};
